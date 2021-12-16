@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppService } from 'src/app/app.service';
+import { AppService } from '../../app.service';
 
 @Component({
   selector: 'app-post-management',
@@ -14,9 +14,7 @@ export class PostManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.appService.getUsers().subscribe(res => {
-      this.users = res;
-      console.log("users: ", this.users);
-      
+      this.users = res;      
     })
   }
 
