@@ -8,11 +8,14 @@ import { AppService } from 'src/app/app.service';
 })
 export class PostManagementComponent implements OnInit {
 
+  users: any;
+
   constructor(private appService: AppService) { }
 
   ngOnInit(): void {
     this.appService.getUsers().subscribe(res => {
-      console.log("res: ", res);
+      this.users = res;
+      console.log("users: ", this.users);
       
     })
   }
