@@ -13,6 +13,8 @@ export class PostManagementComponent implements OnInit {
   constructor(private appService: AppService) { }
 
   ngOnInit(): void {
+    // localStorage.setItem("test", 'hello world!')
+    // console.log("localStorage: ", localStorage.getItem("test"));
     this.appService.getUsers().subscribe(res => {
       this.users = res;      
     })
