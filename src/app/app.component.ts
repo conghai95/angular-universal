@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID, ViewContainerRef } from '@angular/core';
 import { Meta } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
@@ -10,28 +11,25 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 export class AppComponent implements OnInit {
   title = 'angular-universal';
   constructor(
-    private meta: Meta,
     private route: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private viewContainer: ViewContainerRef,
+    @Inject(PLATFORM_ID) private platformId: Object
   ) {
 
   }
 
   ngOnInit(): void {
+    console.log("platformId: ", isPlatformServer(this.platformId));
+    if (!isPlatformServer(this.platformId)) {
+      this.viewContainer.clear();
+    }
+    
     this.activatedRoute.url.subscribe((url: any) => console.log(url))
     this.route.events.subscribe(route => {
       if (route instanceof NavigationEnd) {
         console.log("route: ", route);
       }
-
     })
-    this.meta.addTags([
-      { name: 'keywords', content: 'Angular SEO Integration, Music CRUD, Angular Universal' },
-      { name: 'robots', content: 'index, follow' },
-      { name: 'author', content: 'Digamber Singh' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'date', content: '2019-10-31', scheme: 'YYYY-MM-DD' },
-      { charset: 'UTF-8' }
-    ]);
   }
 }

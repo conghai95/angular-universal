@@ -31,7 +31,11 @@ export function app(): express.Express {
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
-    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+    if (req.originalUrl.startsWith('/my-management')) {
+      res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+    } else {
+      res.sendFile(distFolder + '/index.html');
+    }
   });
 
   return server;
